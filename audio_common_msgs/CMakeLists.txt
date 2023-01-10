@@ -11,14 +11,25 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
+find_package(builtin_interfaces REQUIRED)
+find_package(action_msgs REQUIRED)
 
 set(msg_files
   "msg/AudioData.msg"
   "msg/AudioInfo.msg"
+  "msg/SoundRequest.msg"
+)
+
+set(action_files
+  "action/SoundRequest.action"
 )
 
 rosidl_generate_interfaces(${PROJECT_NAME}
   ${msg_files}
+  ${action_files}
+  DEPENDENCIES
+    action_msgs
+    builtin_interfaces
 )
 
 ament_export_dependencies(rosidl_default_runtime)
