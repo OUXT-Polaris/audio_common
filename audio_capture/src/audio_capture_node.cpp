@@ -52,7 +52,9 @@ namespace audio_capture
         this->get_parameter("device", device);
 
         _pub = this->create_publisher<audio_common_msgs::msg::AudioData>("audio", 10);
-        _pub_info = this->create_publisher<audio_common_msgs::msg::AudioInfo>("audio_info", 1);
+        rclcpp::QoS durable_qos{1};
+        durable_qos.transient_local();
+        _pub_info = this->create_publisher<audio_common_msgs::msg::AudioInfo>("audio_info", durable_qos);
 
         _loop = g_main_loop_new(NULL, false);
         _pipeline = gst_pipeline_new("ros_pipeline");
